@@ -71,7 +71,9 @@ void MainWindow::saveButtonClicked()
 	}
 	playlist.insert("playlist",playlistarray);
 	playlist.insert("title",ui->lineEdit->text());
-	m_ipc->sendJsonMessage("MCMediaLibrary",playlist);
+	QJsonDocument doc(playlist);
+	QByteArray jsonbytes = doc.toJson();
+	m_ipc->sendMessage("MCMediaLibrary",jsonbytes);
 }
 
 void MainWindow::ipcConnected()
